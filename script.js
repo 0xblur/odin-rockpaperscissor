@@ -2,49 +2,19 @@
 // =====================
 // This game is played exclusively in the console.
 
-
 const actionBtns = document.querySelectorAll(".action-btn")
 let playerSelection = "";
-
-let game = function(rounds) {
-  // [DONE]
-  console.log(`We're going to play ${rounds} rounds!!! Let's GO.`)
-  let playerScore = 0;
-  let computerScore = 0;
-  let roundsPlayed = 0;
-
-
-  while (roundsPlayed < rounds) {
-    let roundResult;
-
-    roundResult = playRound()
-
-    if (roundResult === 1) {
-      computerScore++
-      roundsPlayed++
-      console.log("Computer Wins Round !")
-      console.log(`PLAYER [${playerScore}] - [${computerScore}] COMPUTER`)
-    } else if (roundResult === undefined) {
-      console.log("It's a tie! Playing a new round.")
-      console.log(`PLAYER [${playerScore}] - [${computerScore}] COMPUTER`)
-    } else if (roundResult === 0) {
-      playerScore++
-      roundsPlayed++
-      console.log("Player Wins!")
-      console.log(`PLAYER [${playerScore}] - [${computerScore}] COMPUTER`)
-    };
-
-    if ((playerScore > rounds / 2) || (computerScore > rounds / 2)) {
-      break;
-    };
-  }
-
-  if (playerScore > computerScore) {
-    console.log("Player Wins the Game!")
-  } else {
-    console.log("Computer Wins the Game!")
-  };
-}
+let playerScore = 0;
+let computerScore = 0;
+// Create winner message. I do this here and not in the HTML just for fun.
+let winner = document.createElement("p");
+winner.style.color = "red";
+winner.style.fontSize = "150%";
+winner.style.fontWeight = "bold";
+// document.addEventListener("click", () => {
+//   document.querySelector("#player-score p").textContent = String(playerScore);
+//   document.querySelector("#computer-score p").textContent = String(computerScore);
+// })
 
 let getComputerChoice = function() {
   // [DONE]
@@ -60,27 +30,41 @@ let getComputerChoice = function() {
   return randomChoice
 }
 
-let playRound = function(computerSelection = getComputerChoice()) {
-  // [DONE]
-  // Variable initialization.
-  let computerWin;
-
-  if (typeof playerSelection === "string") {
-    playerSelection = playerSelection.toLowerCase();
-  } else {
-    console.log("The user made a wrong selection. Try again!")
-  };
+function playRound(computerSelection = getComputerChoice()) {
+  winner.textContent = "";
 
   if ((computerSelection === "rock" && playerSelection === "scissors") || (computerSelection === "paper" && playerSelection === "rock") || (computerSelection === "scissors" && playerSelection === "paper")) {
-    computerWin = 1;
+    computerScore++;
+    document.querySelector("#msg").textContent = `${playerSelection} loses against ${computerSelection}. Computer++!`;
+    refreshScore();
   } else if (computerSelection === playerSelection) {
-    computerWin = undefined;
+    document.querySelector("#msg").textContent = `${playerSelection} and ${computerSelection}. It's a tie!`;
   } else {
-    computerWin = 0;
+    playerScore++;
+    document.querySelector("#msg").textContent = `${playerSelection} wins against ${computerSelection}. Player++!`;
+    refreshScore();
   };
 
-  return computerWin
+  if (playerScore === 5) {
+    winner.textContent = "Player wins the game!";
+    document.querySelector("#msg").after(winner);
+    refreshGame();
+  } else if (computerScore === 5) {
+    winner.textContent = "Computer wins the game!";
+    document.querySelector("#msg").after(winner);
+    refreshGame();
+  }
 }
 
-actionBtns.forEach(btn => btn.addEventListener('click', playRound))
+function refreshScore() {
+  document.querySelector("#player-score p").textContent = String(playerScore);
+  document.querySelector("#computer-score p").textContent = String(computerScore);
+}
+
+function refreshGame() {
+  playerScore = 0;
+  computerScore = 0;
+};
+
 actionBtns.forEach(btn => btn.addEventListener('click', () => playerSelection = btn.value))
+actionBtns.forEach(btn => btn.addEventListener('click', () => playRound()))
