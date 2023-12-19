@@ -8,12 +8,27 @@
   <script src="./script.js"></script>
 </head>
 <body>
-  <h1>Rock-Paper-Scissor</h1>
-  <p>Rock beats Scissors, Scissors beats Paper, Paper beats Rock</p>
+  <header>
+    <h1>Rock-Paper-Scissor</h1>
+    <p>Rock beats Scissors, Scissors beats Paper, Paper beats Rock</p>
+  </header>
+  <div id="msg-container">
+    <p id="msg">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Optio nihil voluptatum exercitationem adipisci? Officiis officia atque dignissimos voluptate dicta hic?</p>
+  </div>
   <div id="buttons-container">
-    <button id="rock">Rock</button>
-    <button id="paper">Paper</button>
-    <button id="scissors">Scissors</button>
+    <button class="action-btn">Rock</button>
+    <button class="action-btn">Paper</button>
+    <button class="action-btn">Scissors</button>
+  </div>
+  <div id="score-container">
+      <div id="player-score">
+        <h3>Player Score</h3>
+        <p>0</p>
+      </div>
+      <div id="computer-score">
+        <h3>Computer Score</h3>
+        <p>0</p>
+      </div>
   </div>
 </body>
 </html>
