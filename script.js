@@ -2,6 +2,10 @@
 // =====================
 // This game is played exclusively in the console.
 
+
+const actionBtns = document.querySelectorAll(".action-btn")
+let playerSelection = "";
+
 let game = function(rounds) {
   // [DONE]
   console.log(`We're going to play ${rounds} rounds!!! Let's GO.`)
@@ -59,11 +63,7 @@ let getComputerChoice = function() {
 let playRound = function(computerSelection = getComputerChoice()) {
   // [DONE]
   // Variable initialization.
-  let playerSelection;
   let computerWin;
-
-  // Prompting the user player.
-  playerSelection = prompt('Type "rock", "paper", or "scissors"');
 
   if (typeof playerSelection === "string") {
     playerSelection = playerSelection.toLowerCase();
@@ -82,4 +82,5 @@ let playRound = function(computerSelection = getComputerChoice()) {
   return computerWin
 }
 
-
+actionBtns.forEach(btn => btn.addEventListener('click', playRound))
+actionBtns.forEach(btn => btn.addEventListener('click', () => playerSelection = btn.value))
